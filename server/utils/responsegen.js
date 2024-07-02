@@ -97,15 +97,14 @@ class ResponseGenerator {
 
     try {
       this.db = mysql.createConnection({
-        host: 'chat-bot-hahamemo68-11b0.j.aivencloud.com',      
-        user: 'avnadmin',           
-        password: 'AVNS_ZLVlcYeoeScgO73TRdv',           
-        database: 'chatuser' ,
-        port: 22248,
-        ssl: {
-          rejectUnauthorized: true,
-          ca: fs.readFileSync("./ca.pem").toString(),
-        } 
+        host: process.env.SQLHOST || 'localhost',
+        user: process.env.SQLUSER || 'root',
+        password: process.env.SQLPASSWORD || '',
+        database: process.env.SQLDATABASE || 'chatuser',
+        port: process.env.SQLPORT || 3306,
+        waitForConnections: true,
+        connectionLimit: 10,
+        queueLimit: 0,
       });
 
       this.db.connect((err) => {
